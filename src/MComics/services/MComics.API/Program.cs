@@ -19,10 +19,11 @@ namespace MComics.API
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-            .UserPort()
             .ConfigureWebHostDefaults(webBuilder =>
             {
                 webBuilder.UseStartup<Startup>();
+                var port = Environment.GetEnvironmentVariable("PORT");
+                if (!string.IsNullOrEmpty(port)) webBuilder.UseUrls($"http://+:{port}");
             });
     }
 }
